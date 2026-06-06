@@ -188,6 +188,12 @@ class DeployController extends BaseController
             'DB_PASSWORD',
             'DB_SCHEMA',
             'DB_SSLMODE',
+            'PGHOST',
+            'PGPORT',
+            'PGDATABASE',
+            'PGUSER',
+            'PGPASSWORD',
+            'PGSSLMODE',
             'SUPABASE_URL',
             'SUPABASE_KEY',
             'SUPABASE_BUCKET',
@@ -237,7 +243,7 @@ class DeployController extends BaseController
 
         $stringValue = (string) $value;
 
-        if (in_array($key, ['DB_PASSWORD', 'SUPABASE_KEY', 'APP_DIAGNOSE_KEY'], true)) {
+        if (in_array($key, ['DB_PASSWORD', 'PGPASSWORD', 'SUPABASE_KEY', 'APP_DIAGNOSE_KEY'], true)) {
             if (strlen($stringValue) <= 8) {
                 return str_repeat('*', strlen($stringValue));
             }

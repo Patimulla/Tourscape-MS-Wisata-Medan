@@ -208,12 +208,21 @@ class Database extends Config
     private function configureDefaultConnection(): void
     {
         $databaseUrl = $this->firstEnvValue(['DATABASE_URL', 'DB_URL'], '');
+        $hasRailwayPg = $this->firstEnvValue(['PGHOST', 'PGDATABASE', 'PGUSER'], '') !== '';
 
         if ($databaseUrl !== '') {
             $this->default = array_merge($this->default, $this->parseDatabaseUrl($databaseUrl));
         }
 
         $driver = $this->firstEnvValue(['DB_DRIVER', 'database.default.DBDriver'], $this->default['DBDriver']);
+
+        if (
+            $driver === $this->default['DBDriver']
+            && $this->default['DBDriver'] === 'MySQLi'
+            && ($databaseUrl !== '' || $hasRailwayPg)
+        ) {
+            $driver = 'Postgre';
+        }
 
         $this->default['DBDriver'] = (string) $driver;
         $this->default['hostname'] = (string) $this->firstEnvValue(
@@ -241,7 +250,7 @@ class Database extends Config
             $this->default['schema']
         );
         $this->default['sslmode'] = (string) $this->firstEnvValue(
-            ['DB_SSLMODE', 'database.default.sslmode'],
+            ['DB_SSLMODE', 'PGSSLMODE', 'database.default.sslmode'],
             $this->default['sslmode']
         );
         $this->default['DBDebug'] = $this->envToBool($this->firstEnvValue(
