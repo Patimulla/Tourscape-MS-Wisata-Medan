@@ -26,13 +26,20 @@ class SupabaseStorage
 
     private function envValue(string $primary, string $legacy): string
     {
+        $fallback = match ($primary) {
+            'SUPABASE_URL'    => 'https://ekslfvczghsmiqkothdm.supabase.co',
+            'SUPABASE_KEY'    => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrc2xmdmN6Z2hzbWlxa290aGRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODc3ODYsImV4cCI6MjA5MDU2Mzc4Nn0.uFwuatl1DX8Xlhdb70fhgc7AJrD-OVb5xczOUQ4503Y',
+            'SUPABASE_BUCKET' => 'gis wisata',
+            default           => '',
+        };
+
         $value = env($primary);
 
         if ($value !== null && $value !== false && $value !== '') {
             return (string) $value;
         }
 
-        return (string) env($legacy, '');
+        return (string) env($legacy, $fallback);
     }
 
     /**

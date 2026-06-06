@@ -6,6 +6,13 @@ class AuthController extends BaseController
 {
     private function supabaseConfig(string $key): string
     {
+        $fallback = match ($key) {
+            'url'    => 'https://ekslfvczghsmiqkothdm.supabase.co',
+            'key'    => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrc2xmdmN6Z2hzbWlxa290aGRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODc3ODYsImV4cCI6MjA5MDU2Mzc4Nn0.uFwuatl1DX8Xlhdb70fhgc7AJrD-OVb5xczOUQ4503Y',
+            'bucket' => 'gis wisata',
+            default  => '',
+        };
+
         $preferred = match ($key) {
             'url'    => env('SUPABASE_URL'),
             'key'    => env('SUPABASE_KEY'),
@@ -17,7 +24,7 @@ class AuthController extends BaseController
             return (string) $preferred;
         }
 
-        return (string) env('supabase.' . $key, '');
+        return (string) env('supabase.' . $key, $fallback);
     }
 
     public function login()
