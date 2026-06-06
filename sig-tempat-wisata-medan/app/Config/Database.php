@@ -287,7 +287,7 @@ class Database extends Config
     private function firstEnvValue(array $keys, mixed $default = null): mixed
     {
         foreach ($keys as $key) {
-            $value = env($key);
+            $value = app_env($key);
 
             if ($value !== null && $value !== false && $value !== '') {
                 return $value;

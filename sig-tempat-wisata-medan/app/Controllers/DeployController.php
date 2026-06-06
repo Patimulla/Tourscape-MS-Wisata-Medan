@@ -67,6 +67,7 @@ class DeployController extends BaseController
             'db_port'          => (string) ($dbConfig->default['port'] ?? '-'),
             'db_schema'        => $dbConfig->default['schema'] ?? '-',
             'db_sslmode'       => $dbConfig->default['sslmode'] ?? '-',
+            'db_source'        => $this->inferDatabaseSource(),
         ];
     }
 
@@ -204,7 +205,7 @@ class DeployController extends BaseController
         $checks = [];
 
         foreach ($keys as $key) {
-            $value = env($key);
+            $value = app_env($key);
             $checks[] = [
                 'key'   => $key,
                 'set'   => $value !== null && $value !== false && $value !== '',
@@ -213,6 +214,15 @@ class DeployController extends BaseController
         }
 
         return $checks;
+    }
+
+    private function inferDatabaseSource(): string
+    {
+        if (app_env('DATABASE_URL') || app_env('DB_HOST') || app_env('PGHOST')) {
+            return 'Railway variables / runtime environment';
+        }
+
+        return 'Fallback hardcoded default di Database.php';
     }
 
     private function envValue(string $key, mixed $default = null): mixed

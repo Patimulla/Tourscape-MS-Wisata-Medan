@@ -33,13 +33,13 @@ class SupabaseStorage
             default           => '',
         };
 
-        $value = env($primary);
+        $value = app_env($primary);
 
         if ($value !== null && $value !== false && $value !== '') {
             return (string) $value;
         }
 
-        return (string) env($legacy, $fallback);
+        return (string) app_env($legacy, $fallback);
     }
 
     /**

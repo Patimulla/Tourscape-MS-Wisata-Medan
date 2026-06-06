@@ -14,9 +14,9 @@ class AuthController extends BaseController
         };
 
         $preferred = match ($key) {
-            'url'    => env('SUPABASE_URL'),
-            'key'    => env('SUPABASE_KEY'),
-            'bucket' => env('SUPABASE_BUCKET'),
+            'url'    => app_env('SUPABASE_URL'),
+            'key'    => app_env('SUPABASE_KEY'),
+            'bucket' => app_env('SUPABASE_BUCKET'),
             default  => null,
         };
 
@@ -24,7 +24,7 @@ class AuthController extends BaseController
             return (string) $preferred;
         }
 
-        return (string) env('supabase.' . $key, $fallback);
+        return (string) app_env('supabase.' . $key, $fallback);
     }
 
     public function login()
