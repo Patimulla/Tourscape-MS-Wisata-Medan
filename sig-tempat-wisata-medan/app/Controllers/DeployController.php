@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
 
@@ -20,8 +19,10 @@ class DeployController extends BaseController
 
     public function diagnose(): string|ResponseInterface
     {
-        if (!$this->envToBool($this->envValue('APP_DIAGNOSE_ENABLED', ENVIRONMENT !== 'production'))) {
-            throw PageNotFoundException::forPageNotFound();
+        if (!$this->envToBool($this->envValue('APP_DIAGNOSE_ENABLED', true))) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setBody('Halaman diagnosis sedang dinonaktifkan. Set APP_DIAGNOSE_ENABLED=true untuk mengaktifkannya.');
         }
 
         $expectedKey = $this->envValue('APP_DIAGNOSE_KEY', '');
