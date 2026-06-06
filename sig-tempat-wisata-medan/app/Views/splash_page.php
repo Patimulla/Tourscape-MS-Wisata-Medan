@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/css/terra-medan.css?v=3.0">
-    <link rel="stylesheet" href="/css/splash.css?v=3.0">
+    <link rel="stylesheet" href="<?= base_url('css/terra-medan.css') ?>?v=3.0">
+    <link rel="stylesheet" href="<?= base_url('css/splash.css') ?>?v=3.0">
 </head>
 <body class="splash-page">
     <script>
@@ -75,7 +75,7 @@
     <!-- ========== HERO ========== -->
     <section class="splash-hero">
         <div class="splash-hero-bg">
-            <img src="/images/hero-medan.png" alt="Panorama Kota Medan" loading="eager">
+            <img src="<?= base_url('images/hero-medan.png') ?>" alt="Panorama Kota Medan" loading="eager">
             <div class="splash-hero-overlay"></div>
             <div class="splash-hero-orb splash-hero-orb-1"></div>
             <div class="splash-hero-orb splash-hero-orb-2"></div>
@@ -291,6 +291,6 @@
         </div>
     </footer>
 
-    <script src="/js/splash.js"></script>
+    <script src="<?= base_url('js/splash.js') ?>"></script>
 </body>
 </html>

@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin="">
-    <link rel="stylesheet" href="/css/terra-medan.css?v=3.0">
-    <link rel="stylesheet" href="/css/stitch-pages.css?v=3.0">
+    <link rel="stylesheet" href="<?= base_url('css/terra-medan.css') ?>?v=3.0">
+    <link rel="stylesheet" href="<?= base_url('css/stitch-pages.css') ?>?v=3.0">
 </head>
 <body class="site-page">
     <script>
@@ -110,6 +110,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
-    <script src="/js/wisata_detail_page.js"></script>
+    <script src="<?= base_url('js/wisata_detail_page.js') ?>"></script>
 </body>
 </html>

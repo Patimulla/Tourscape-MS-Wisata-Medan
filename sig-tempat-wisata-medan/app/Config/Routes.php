@@ -14,6 +14,8 @@ $routes->get('/peta', 'Home::index');                   // Alias Web GIS
 $routes->get('/explore', 'Home::landing');              // Beranda publik (stats + destinasi)
 $routes->get('/about', 'Home::about');                  // Halaman About
 $routes->get('/wisata/detail/(:num)', 'Home::detail/$1'); // Detail lokasi publik
+$routes->get('/_health', 'DeployController::health');   // Health check Railway
+$routes->get('/_diagnose', 'DeployController::diagnose'); // Diagnose deploy/db/assets
 
 $routes->get('/admin/login', 'AuthController::login');
 $routes->post('/admin/attempt-login', 'AuthController::attemptLogin');

@@ -4,6 +4,22 @@ namespace App\Controllers;
 
 class AuthController extends BaseController
 {
+    private function supabaseConfig(string $key): string
+    {
+        $preferred = match ($key) {
+            'url'    => env('SUPABASE_URL'),
+            'key'    => env('SUPABASE_KEY'),
+            'bucket' => env('SUPABASE_BUCKET'),
+            default  => null,
+        };
+
+        if ($preferred !== null && $preferred !== false && $preferred !== '') {
+            return (string) $preferred;
+        }
+
+        return (string) env('supabase.' . $key, '');
+    }
+
     public function login()
     {
         if (session()->get('admin_logged_in')) {
@@ -17,8 +33,12 @@ class AuthController extends BaseController
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
 
-        $url = env('supabase.url') . '/auth/v1/token?grant_type=password';
-        $key = env('supabase.key');
+        $url = rtrim($this->supabaseConfig('url'), '/') . '/auth/v1/token?grant_type=password';
+        $key = $this->supabaseConfig('key');
+
+        if ($url === '/auth/v1/token?grant_type=password' || $key === '') {
+            return redirect()->back()->with('error', 'Konfigurasi Supabase belum lengkap di server.');
+        }
 
         $client = \Config\Services::curlrequest();
         try {

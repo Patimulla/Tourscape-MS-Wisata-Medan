@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css">
 
-    <link rel="stylesheet" href="/css/terra-medan.css?v=3.0">
-    <link rel="stylesheet" href="/css/stitch-pages.css?v=4.0">
-    <link rel="stylesheet" href="/css/webgis.css?v=4.0">
+    <link rel="stylesheet" href="<?= base_url('css/terra-medan.css') ?>?v=3.0">
+    <link rel="stylesheet" href="<?= base_url('css/stitch-pages.css') ?>?v=4.0">
+    <link rel="stylesheet" href="<?= base_url('css/webgis.css') ?>?v=4.0">
 </head>
 <body class="webgis-page">
     <script>
@@ -212,7 +212,7 @@
             crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-    <script src="/js/webgis.js"></script>
+    <script src="<?= base_url('js/webgis.js') ?>"></script>
 </body>
 </html>
 

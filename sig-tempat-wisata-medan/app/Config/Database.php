@@ -42,6 +42,8 @@ class Database extends Config
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 3306,
+        'schema'       => 'public',
+        'sslmode'      => '',
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
@@ -191,6 +193,8 @@ class Database extends Config
 
     public function __construct()
     {
+        $this->configureDefaultConnection();
+
         parent::__construct();
 
         // Ensure that we always set the database group to 'tests' if
@@ -199,5 +203,97 @@ class Database extends Config
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
+    }
+
+    private function configureDefaultConnection(): void
+    {
+        $databaseUrl = $this->firstEnvValue(['DATABASE_URL', 'DB_URL'], '');
+
+        if ($databaseUrl !== '') {
+            $this->default = array_merge($this->default, $this->parseDatabaseUrl($databaseUrl));
+        }
+
+        $driver = $this->firstEnvValue(['DB_DRIVER', 'database.default.DBDriver'], $this->default['DBDriver']);
+
+        $this->default['DBDriver'] = (string) $driver;
+        $this->default['hostname'] = (string) $this->firstEnvValue(
+            ['DB_HOST', 'PGHOST', 'database.default.hostname'],
+            $this->default['hostname']
+        );
+        $this->default['username'] = (string) $this->firstEnvValue(
+            ['DB_USERNAME', 'PGUSER', 'database.default.username'],
+            $this->default['username']
+        );
+        $this->default['password'] = (string) $this->firstEnvValue(
+            ['DB_PASSWORD', 'PGPASSWORD', 'database.default.password'],
+            $this->default['password']
+        );
+        $this->default['database'] = (string) $this->firstEnvValue(
+            ['DB_DATABASE', 'PGDATABASE', 'database.default.database'],
+            $this->default['database']
+        );
+        $this->default['port'] = (int) $this->firstEnvValue(
+            ['DB_PORT', 'PGPORT', 'database.default.port'],
+            $this->default['port']
+        );
+        $this->default['schema'] = (string) $this->firstEnvValue(
+            ['DB_SCHEMA', 'database.default.schema'],
+            $this->default['schema']
+        );
+        $this->default['sslmode'] = (string) $this->firstEnvValue(
+            ['DB_SSLMODE', 'database.default.sslmode'],
+            $this->default['sslmode']
+        );
+        $this->default['DBDebug'] = $this->envToBool($this->firstEnvValue(
+            ['DB_DEBUG', 'database.default.DBDebug'],
+            ENVIRONMENT !== 'production'
+        ));
+    }
+
+    private function parseDatabaseUrl(string $databaseUrl): array
+    {
+        $parts = parse_url($databaseUrl);
+
+        if ($parts === false) {
+            return [];
+        }
+
+        parse_str($parts['query'] ?? '', $query);
+
+        $path = $parts['path'] ?? '';
+        $databaseName = $path !== '' ? ltrim($path, '/') : '';
+
+        return array_filter([
+            'DBDriver' => str_starts_with((string) ($parts['scheme'] ?? ''), 'postgres') ? 'Postgre' : $this->default['DBDriver'],
+            'hostname' => $parts['host'] ?? null,
+            'username' => $parts['user'] ?? null,
+            'password' => $parts['pass'] ?? null,
+            'database' => $databaseName !== '' ? $databaseName : null,
+            'port'     => isset($parts['port']) ? (int) $parts['port'] : null,
+            'schema'   => $query['schema'] ?? null,
+            'sslmode'  => $query['sslmode'] ?? null,
+        ], static fn($value): bool => $value !== null && $value !== '');
+    }
+
+    private function firstEnvValue(array $keys, mixed $default = null): mixed
+    {
+        foreach ($keys as $key) {
+            $value = env($key);
+
+            if ($value !== null && $value !== false && $value !== '') {
+                return $value;
+            }
+        }
+
+        return $default;
+    }
+
+    private function envToBool(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return in_array(strtolower(trim((string) $value)), ['1', 'true', 'yes', 'on'], true);
     }
 }

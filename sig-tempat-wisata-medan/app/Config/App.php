@@ -40,7 +40,7 @@ class App extends BaseConfig
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
      */
-    public string $indexPage = 'index.php';
+    public string $indexPage = '';
 
     /**
      * --------------------------------------------------------------------------
@@ -199,4 +199,116 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $configuredBaseURL = $this->firstEnvValue([
+            'APP_BASE_URL',
+            'app.baseURL',
+        ], $this->baseURL);
+
+        if ($this->shouldDetectBaseURL($configuredBaseURL)) {
+            $configuredBaseURL = $this->detectBaseURLFromRequest() ?? $configuredBaseURL;
+        }
+
+        $this->baseURL = $this->normalizeBaseURL($configuredBaseURL);
+        $this->indexPage = $this->firstEnvValue([
+            'APP_INDEX_PAGE',
+            'app.indexPage',
+        ], $this->indexPage);
+        $this->forceGlobalSecureRequests = $this->envToBool(
+            $this->firstEnvValue([
+                'APP_FORCE_HTTPS',
+                'app.forceGlobalSecureRequests',
+            ], $this->forceGlobalSecureRequests)
+        );
+        $this->appTimezone = $this->firstEnvValue([
+            'APP_TIMEZONE',
+            'app.appTimezone',
+        ], $this->appTimezone);
+
+        $allowedHostnames = $this->firstEnvValue([
+            'APP_ALLOWED_HOSTNAMES',
+        ], '');
+
+        if ($allowedHostnames !== '') {
+            $this->allowedHostnames = array_values(array_filter(array_map(
+                static fn(string $hostname): string => trim($hostname),
+                explode(',', $allowedHostnames)
+            )));
+        }
+    }
+
+    private function firstEnvValue(array $keys, mixed $default = null): mixed
+    {
+        foreach ($keys as $key) {
+            $value = env($key);
+
+            if ($value !== null && $value !== false && $value !== '') {
+                return $value;
+            }
+        }
+
+        return $default;
+    }
+
+    private function envToBool(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        $normalized = strtolower(trim((string) $value));
+
+        return in_array($normalized, ['1', 'true', 'yes', 'on'], true);
+    }
+
+    private function normalizeBaseURL(string $baseURL): string
+    {
+        $baseURL = trim($baseURL);
+
+        if ($baseURL === '') {
+            $baseURL = 'http://localhost:8080/';
+        }
+
+        return rtrim($baseURL, '/') . '/';
+    }
+
+    private function shouldDetectBaseURL(string $configuredBaseURL): bool
+    {
+        if (is_cli()) {
+            return false;
+        }
+
+        $trimmed = trim($configuredBaseURL);
+
+        if ($trimmed === '') {
+            return true;
+        }
+
+        return str_contains($trimmed, 'localhost') || str_contains($trimmed, '127.0.0.1');
+    }
+
+    private function detectBaseURLFromRequest(): ?string
+    {
+        $forwardedProto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+        $forwardedHost  = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? '';
+        $host           = $forwardedHost !== '' ? $forwardedHost : ($_SERVER['HTTP_HOST'] ?? '');
+
+        if ($host === '') {
+            return null;
+        }
+
+        $scheme = 'http';
+
+        if ($forwardedProto !== '') {
+            $scheme = trim(explode(',', $forwardedProto)[0]);
+        } elseif (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            $scheme = 'https';
+        }
+
+        return sprintf('%s://%s/', $scheme, $host);
+    }
 }

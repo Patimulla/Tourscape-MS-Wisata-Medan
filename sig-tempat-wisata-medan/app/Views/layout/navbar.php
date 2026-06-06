@@ -6,7 +6,7 @@ $activePage = $activePage ?? '';
 ?>
 <header <?= $headerIdAttr ?> <?= $headerClassAttr ?>>
     <div <?= $innerClassAttr ?>>
-        <a href="/" class="site-brand" style="text-decoration:none;">
+        <a href="<?= site_url('/') ?>" class="site-brand" style="text-decoration:none;">
             <div class="site-brand-mark">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path>
@@ -17,13 +17,13 @@ $activePage = $activePage ?? '';
         </a>
 
         <nav class="site-nav">
-            <a class="site-nav-link <?= ($activePage === 'home') ? 'active' : '' ?>" href="/">Home</a>
-            <a class="site-nav-link <?= ($activePage === 'explore') ? 'active' : '' ?>" href="/explore">Explore</a>
-            <a class="site-nav-link <?= ($activePage === 'peta') ? 'active' : '' ?>" href="/peta">Peta Interaktif</a>
-            <a class="site-nav-link <?= ($activePage === 'about') ? 'active' : '' ?>" href="/about">About</a>
+            <a class="site-nav-link <?= ($activePage === 'home') ? 'active' : '' ?>" href="<?= site_url('/') ?>">Home</a>
+            <a class="site-nav-link <?= ($activePage === 'explore') ? 'active' : '' ?>" href="<?= site_url('explore') ?>">Explore</a>
+            <a class="site-nav-link <?= ($activePage === 'peta') ? 'active' : '' ?>" href="<?= site_url('peta') ?>">Peta Interaktif</a>
+            <a class="site-nav-link <?= ($activePage === 'about') ? 'active' : '' ?>" href="<?= site_url('about') ?>">About</a>
             <?php if(session()->get('admin_logged_in') && !in_array($activePage ?? '', ['explore', 'peta', 'about'])): ?>
-                <a class="site-nav-link <?= ($activePage === 'admin') ? 'active' : '' ?>" href="/admin">Admin Panel</a>
-                <a class="site-nav-link" href="/admin/logout" style="color: var(--tm-danger); border-color: var(--tm-danger);">Logout</a>
+                <a class="site-nav-link <?= ($activePage === 'admin') ? 'active' : '' ?>" href="<?= site_url('admin') ?>">Admin Panel</a>
+                <a class="site-nav-link" href="<?= site_url('admin/logout') ?>" style="color: var(--tm-danger); border-color: var(--tm-danger);">Logout</a>
             <?php endif; ?>
         </nav>
 

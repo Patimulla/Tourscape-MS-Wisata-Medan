@@ -19,9 +19,20 @@ class SupabaseStorage
 
     public function __construct()
     {
-        $this->url    = rtrim(env('supabase.url', ''), '/');
-        $this->key    = env('supabase.key', '');
-        $this->bucket = env('supabase.bucket', '');
+        $this->url    = rtrim($this->envValue('SUPABASE_URL', 'supabase.url'), '/');
+        $this->key    = $this->envValue('SUPABASE_KEY', 'supabase.key');
+        $this->bucket = $this->envValue('SUPABASE_BUCKET', 'supabase.bucket');
+    }
+
+    private function envValue(string $primary, string $legacy): string
+    {
+        $value = env($primary);
+
+        if ($value !== null && $value !== false && $value !== '') {
+            return (string) $value;
+        }
+
+        return (string) env($legacy, '');
     }
 
     /**
