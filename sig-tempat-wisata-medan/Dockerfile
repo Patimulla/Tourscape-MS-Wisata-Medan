@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
         mbstring \
         pgsql \
         pdo_pgsql \
-    && a2enmod rewrite headers \
+    && a2dismod mpm_event \
+    && a2enmod mpm_prefork rewrite headers \
     && sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf /etc/apache2/apache2.conf \
     && sed -ri '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
     && rm -rf /var/lib/apt/lists/*
