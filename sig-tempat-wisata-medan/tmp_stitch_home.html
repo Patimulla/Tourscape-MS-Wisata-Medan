@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medan-Deli Serdang Tourism GIS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#a4a988",
+                    "outline-variant": "#d3c3bc",
+                    "on-secondary-container": "#7a532a",
+                    "secondary-container": "#ffca98",
+                    "on-tertiary-fixed-variant": "#45492f",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e4e2de",
+                    "on-background": "#1b1c1a",
+                    "primary": "#362115",
+                    "inverse-surface": "#30312e",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#1a1d07",
+                    "tertiary": "#242811",
+                    "on-primary-fixed-variant": "#5a4134",
+                    "on-primary-container": "#c19f8e",
+                    "tertiary-fixed-dim": "#c5c9a7",
+                    "secondary-fixed-dim": "#f0bd8b",
+                    "inverse-primary": "#e3bfad",
+                    "surface-variant": "#e4e2de",
+                    "secondary-fixed": "#ffdcbd",
+                    "surface": "#fbf9f5",
+                    "on-surface": "#1b1c1a",
+                    "primary-fixed-dim": "#e3bfad",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#3a3e25",
+                    "surface-container-high": "#eae8e4",
+                    "tertiary-fixed": "#e1e6c2",
+                    "secondary": "#7d562d",
+                    "on-surface-variant": "#4f453f",
+                    "surface-container-low": "#f5f3ef",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f2f0ed",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#ffdbca",
+                    "primary-container": "#4e3629",
+                    "surface-tint": "#74584a",
+                    "on-primary-fixed": "#2a170c",
+                    "error": "#ba1a1a",
+                    "surface-container": "#efeeea",
+                    "surface-bright": "#fbf9f5",
+                    "on-secondary-fixed-variant": "#623f18",
+                    "background": "#fbf9f5",
+                    "surface-dim": "#dbdad6",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#2c1600",
+                    "on-secondary": "#ffffff",
+                    "outline": "#81746e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "sidebar-width": "360px",
+                    "base": "8px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Montserrat"],
+                    "headline-lg": ["Montserrat"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Montserrat"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #fbf9f5; color: #1b1c1a; }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(129, 116, 110, 0.1) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav aria-label="Main Navigation" class="w-full top-0 sticky z-50 shadow-sm border-b border-outline-variant flex justify-between items-center px-margin-desktop py-4 bg-surface">
+<div class="text-title-md font-title-md font-bold text-primary">DeliExplore GIS</div>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-primary border-b-2 border-primary pb-1 font-title-md text-title-md cursor-pointer active:scale-95 transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-secondary font-title-md text-title-md cursor-pointer active:scale-95 transition-colors duration-200" href="#">Map</a>
+<a class="text-on-surface-variant hover:text-secondary font-title-md text-title-md cursor-pointer active:scale-95 transition-colors duration-200" href="#">Nearest</a>
+<a class="text-on-surface-variant hover:text-secondary font-title-md text-title-md cursor-pointer active:scale-95 transition-colors duration-200" href="#">Admin Login</a>
+</div>
+<div class="flex gap-4 items-center">
+<span aria-label="language" class="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer active:scale-95 transition-colors duration-200">language</span>
+<span aria-label="account_circle" class="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer active:scale-95 transition-colors duration-200">account_circle</span>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative pt-24 pb-32 px-margin-desktop overflow-hidden hero-pattern">
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<h1 class="font-display-lg text-display-lg text-primary mb-6">Eksplorasi Keindahan Medan &amp; Deli Serdang</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
+                    Sistem Informasi Geografis Pariwisata yang komprehensif. Temukan destinasi wisata, kuliner, dan budaya terbaik dengan data spasial yang akurat dan interaktif.
+                </p>
+<button class="bg-primary text-on-primary hover:bg-secondary transition-colors duration-300 font-label-md text-label-md px-8 py-4 rounded-xl shadow-md active:scale-95 flex items-center gap-2 mx-auto">
+<span class="material-symbols-outlined">map</span>
+                    Lihat Peta Interaktif
+                </button>
+</div>
+<!-- Floating Decorative Elements -->
+<div class="absolute top-10 left-10 w-32 h-32 bg-secondary-container rounded-full opacity-20 blur-3xl"></div>
+<div class="absolute bottom-10 right-10 w-48 h-48 bg-primary-container rounded-full opacity-10 blur-3xl"></div>
+</section>
+<!-- Statistics Section Bento Style -->
+<section class="px-margin-desktop py-16 bg-surface-container-low border-y border-outline-variant">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">location_on</span>
+<h3 class="font-display-lg text-display-lg text-primary">150+</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Total Spots</p>
+</div>
+<div class="bg-surface p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">star_rate</span>
+<h3 class="font-display-lg text-display-lg text-primary">4.8</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Average Rating</p>
+</div>
+<div class="bg-surface p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">map</span>
+<h3 class="font-display-lg text-display-lg text-primary">22</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Districts Covered</p>
+</div>
+</div>
+</section>
+<!-- Destinasi Terbaru Section -->
+<section class="px-margin-desktop py-24">
+<div class="max-w-6xl mx-auto">
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Destinasi Terbaru</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Eksplorasi lokasi pariwisata yang baru ditambahkan ke sistem GIS.</p>
+</div>
+<a class="hidden md:flex items-center gap-1 font-label-md text-label-md text-secondary hover:text-primary transition-colors" href="#">
+                        Lihat Semua <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Lake Toba scenic view" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sweeping, breathtaking view of Lake Toba in North Sumatra, Indonesia. The vast caldera lake is surrounded by lush green hills and a bright blue sky with scattered clouds. The water reflects the earthy tones of the landscape, fitting perfectly into an organic, nature-focused design aesthetic. Warm sunlight bathes the scene, highlighting the natural beauty of the region." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtOa_ZM0m2s8ehkAD46Obe9CRLis8nqX4y5nktGLIEQVNYY0hDPebUslt-r7jAb-O3-7djLyj9iw4ilJCxmP2PkCafc_mJybiXmEtIJ46_Z1vUdoV7ZIZHMw1tiXvsWmkJzDiqbx-8J5rhdaMq3niXmBrUG5S617deo62sh7W5sLQZXBv1qlFD3YJDobu1xHxBmepRcnbN2KfQGKP0JKA2aJK1SCfHlbeQ31R_Zwp7X_Ydha81Vf6MHh1xPfaSj12M_aYGot5LCZ8"/>
+<div class="absolute top-3 right-3 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">star</span> 4.9
+                            </div>
+</div>
+<div class="p-4">
+<div class="flex gap-2 mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm">Alam</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-1">Danau Toba Viewpoint</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Titik pandang terbaik untuk menikmati keindahan kaldera terbesar di dunia.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Traditional food in Medan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up, appetizing shot of a traditional Indonesian culinary dish, likely from Medan. Rich, earthy colors like deep browns, reds, and yellows dominate the plate, resting on a textured wooden table. The lighting is warm and inviting, emphasizing the spices and textures of the food. The overall mood is vibrant and culturally rich, aligning with a sophisticated travel platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8SGyVwt2Hu0kJnwBMWiHYhdSg4ZGAdDP6aOYTgBsD1LJmWHIf1ieoLJ1s926ZNoKmUzMHHDhgqpN24J8EN_Xuc7--pSIFalxXtW9la40F6xS4AIshwLAjKxioP4dJXhYAeojvN6RUDBWPyNHtfsvQ84GXH4pLqWgtuhpplEnXna3hAi28xHzUMCrNKYyYP3Iqc3urqmTdUHWB7PyWgQ7hpYXAWYavFtSff4hzQM356n2nZobe9oJoc4heeEQEC12Wk2oAeFDJERk"/>
+<div class="absolute top-3 right-3 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">star</span> 4.7
+                            </div>
+</div>
+<div class="p-4">
+<div class="flex gap-2 mb-2">
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm">Kuliner</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-1">Pusat Kuliner Merdeka</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Kawasan kuliner legendaris yang menyajikan berbagai hidangan otentik Medan.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Maimun Palace architecture" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An architectural photograph of a grand, historic palace, inspired by Maimun Palace in Medan. The building features intricate yellow and green details with distinct Malay and Islamic architectural influences. The scene is shot during golden hour, casting long, elegant shadows and highlighting the earthy, rich tones of the structure. The composition conveys heritage and authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyW3bKY0ypooe1NKochINa-f26J1k5fWS0_pUkov4ISAegm_252TW0JA42LHNspBtOmESbmt4bpU1YayTVg7KQiLzISkdwKeUbT2JQ4dbhh3W8YqgHrl_Sl23v02W5SWjqRdYJPLdvDr3xYqJXaZieX9wjznnJ6PFNIRp0EFCeo_F31LWZXoHFwHPBhtvDoX_iGajC2Ex6hdPNSTZFIT5qwmxNAcAemLyHkQQIhpPR20mrQXxucEMqts77FBtFu9nYwv2fWcw_Ntg"/>
+<div class="absolute top-3 right-3 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">star</span> 4.8
+                            </div>
+</div>
+<div class="p-4">
+<div class="flex gap-2 mb-2">
+<span class="bg-tertiary-container text-tertiary-fixed-dim px-2 py-0.5 rounded-full font-label-sm text-label-sm">Budaya</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-1">Istana Maimun</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Ikon sejarah Kesultanan Deli dengan arsitektur unik perpaduan budaya.</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Green forest trekking path" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene, verdant forest trekking path in Deli Serdang. Tall, ancient trees form a canopy over a natural, earthy trail. The lighting is dappled, with sunbeams filtering through the leaves, creating a tranquil and exploratory mood. The rich greens and soil browns emphasize an organic, grounded aesthetic suitable for an eco-tourism GIS platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsyYTXmd7M3U8qXm4ts5yipYzQq723MYYiY7gjIWX3WqonaeerlfEadA2QqjAfHju0c9deIEzgr0MdL6igm-hLpFcxl4Fy9Uk4hazYhrIqaPN6mNllGDAWl4vnEF8BrY3Me8kbs5INP19ZbP3AISzSUo8PjZMgz0elhz5f8CRk99pjRK65HwhoXWiJYELDPGxNBZ0ktcO0EuoINlb0WNQ6FhAbhBjlM0Nn_mnlYQPwuYDSKgXNGkfaNGUtg_BSj8RuXKK-tb_3xpo"/>
+<div class="absolute top-3 right-3 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">star</span> 4.6
+                            </div>
+</div>
+<div class="p-4">
+<div class="flex gap-2 mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm">Ekowisata</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-1">Hutan Raya Deli</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Kawasan konservasi alam yang menawarkan jalur trekking menantang.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-primary flex flex-col md:flex-row justify-between items-center px-margin-desktop space-y-4 md:space-y-0 flat no shadows">
+<div class="text-title-md font-title-md text-surface">DeliExplore GIS</div>
+<div class="flex gap-6">
+<a class="text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors font-body-md text-body-md opacity-90 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors font-body-md text-body-md opacity-90 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors font-body-md text-body-md opacity-90 hover:opacity-100" href="#">Contact Support</a>
+<a class="text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors font-body-md text-body-md opacity-90 hover:opacity-100" href="#">Data Sources</a>
+</div>
+<div class="text-on-primary font-label-sm text-label-sm">
+            © 2024 Medan-Deli Serdang Tourism GIS. All rights reserved.
+        </div>
+</footer>
+</body></html>

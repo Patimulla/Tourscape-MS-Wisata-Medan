@@ -1,0 +1,100 @@
+# ============================================================
+# Root Monorepo Ignore
+# ============================================================
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs / temp
+*.log
+*.tmp
+*.temp
+
+# ============================================================
+# Flutter App
+# Folder: flutter-wisata-medan
+# ============================================================
+
+flutter-wisata-medan/.dart_tool/
+flutter-wisata-medan/.packages
+flutter-wisata-medan/.flutter-plugins
+flutter-wisata-medan/.flutter-plugins-dependencies
+flutter-wisata-medan/.metadata
+flutter-wisata-medan/build/
+
+# Flutter / Dart generated
+flutter-wisata-medan/pubspec.lock
+
+# Android generated / local
+flutter-wisata-medan/android/.gradle/
+flutter-wisata-medan/android/app/build/
+flutter-wisata-medan/android/local.properties
+flutter-wisata-medan/android/captures/
+
+# iOS generated / local
+flutter-wisata-medan/ios/Pods/
+flutter-wisata-medan/ios/.symlinks/
+flutter-wisata-medan/ios/Flutter/ephemeral/
+flutter-wisata-medan/ios/Flutter/Flutter.framework
+flutter-wisata-medan/ios/Flutter/App.framework
+
+# macOS / Linux / Windows generated
+flutter-wisata-medan/macos/Pods/
+flutter-wisata-medan/linux/flutter/ephemeral/
+flutter-wisata-medan/windows/flutter/ephemeral/
+
+# Test / coverage
+flutter-wisata-medan/coverage/
+
+# Firebase / secrets
+flutter-wisata-medan/android/app/google-services.json
+flutter-wisata-medan/ios/Runner/GoogleService-Info.plist
+
+# ============================================================
+# CodeIgniter 4 Web
+# Folder: sig-tempat-wisata-medan
+# ============================================================
+
+# Environment / secrets
+sig-tempat-wisata-medan/.env
+
+# Composer dependencies
+sig-tempat-wisata-medan/vendor/
+
+# Writable runtime files
+sig-tempat-wisata-medan/writable/cache/*
+sig-tempat-wisata-medan/writable/debugbar/*
+sig-tempat-wisata-medan/writable/logs/*
+sig-tempat-wisata-medan/writable/session/*
+sig-tempat-wisata-medan/writable/uploads/*
+
+# Keep writable folders themselves
+!sig-tempat-wisata-medan/writable/cache/.gitkeep
+!sig-tempat-wisata-medan/writable/debugbar/.gitkeep
+!sig-tempat-wisata-medan/writable/logs/.gitkeep
+!sig-tempat-wisata-medan/writable/session/.gitkeep
+!sig-tempat-wisata-medan/writable/uploads/.gitkeep
+
+# ============================================================
+# Secrets (global safety net)
+# ============================================================
+
+**/.env
+**/.env.*
+!**/.env.example
+
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# Optional local database files
+*.sqlite
+*.sqlite3
+
